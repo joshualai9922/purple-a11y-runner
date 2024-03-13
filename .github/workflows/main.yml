@@ -17,7 +17,7 @@ jobs:
     - name: Build and run Docker container
       run: |
         # Build your Docker image (replace 'purple-hats' and 'Dockerfile' with your image name and Dockerfile path)
-        docker build -t purple-ally-runner .
+        docker build -t purple-a11y-runner .
         # Run the Docker container (adjust any options as needed)
         docker run -dit --name purple-hats-container purple-a11y-runner
       # Ensure the Docker container is running before running the next step
