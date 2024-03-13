@@ -31,7 +31,7 @@ jobs:
     - name: Run Node CLI command inside the Docker container
       run: |
         # Execute a website crawl
-        docker exec purple-hats-container node cli -f inputUrls.csv -k ay:accessibility@tech.gov.sg
+         docker exec purple-hats-container node cli -f /app/purple-a11y-runner/inputUrls.csv -k ay:accessibility@tech.gov.sg
 
     - name: Display the content
       run: |
