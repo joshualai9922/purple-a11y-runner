@@ -41,11 +41,6 @@ RUN echo "3,https://tech.gov.sg,3,3,website" >> inputUrls.csv
 
 RUN npm install
 
-# Environment variables for node and Playwright
-
-# Install Playwright browsers
-RUN npx playwright install chromium webkit
-
 # Add non-privileged user
 RUN addgroup -S purple && adduser -S -G purple purple
 RUN chown -R purple:purple /app
@@ -76,6 +71,9 @@ ENV NODE_ENV=production
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="true"
 ENV PLAYWRIGHT_BROWSERS_PATH="/opt/ms-playwright"
 ENV PATH="/opt/verapdf:${PATH}"
+
+# Install Playwright browsers
+RUN npx playwright install chromium webkit
 
 # Install dependencies
 RUN npm ci --omit=dev
