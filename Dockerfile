@@ -43,12 +43,9 @@ RUN npm install
 
 # Add non-privileged user
 RUN addgroup -S purple && adduser -S -G purple purple
-RUN chown -R purple:purple /app
+RUN chown -R purple:purple /app /opt
 
 RUN npm install
-
-# Run everything after as non-privileged user.
-USER purple
 
 RUN mkdir -p /app/chromium_support_folder
 
@@ -80,6 +77,8 @@ RUN npx playwright install chromium webkit
 
 # Run everything after as non-privileged user.
 USER purple
+
+COPY . .
 
 
 # Change directory into the purple-a11y folder
