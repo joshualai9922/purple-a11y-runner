@@ -34,6 +34,8 @@ WORKDIR /app/purple-a11y-runner
 # Copy package.json to working directory, perform npm install before copying the remaining files
 COPY package*.json ./
 
+RUN npm install
+
 # Environment variables for node and Playwright
 ENV NODE_ENV=production
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="true"
