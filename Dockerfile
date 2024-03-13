@@ -53,7 +53,6 @@ ENV PATH="/opt/verapdf:${PATH}"
 RUN npx playwright install chromium webkit
 
 # Add non-privileged user
-USER root
 RUN addgroup -S purple && adduser -S -G purple purple
 RUN chown -R purple:purple /app
 
