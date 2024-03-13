@@ -32,18 +32,16 @@ RUN rm -rf /opt/verapdf-installer.zip /opt/verapdf-greenfield-*
 WORKDIR /app/purple-a11y-runner
 
 # Copy package.json to working directory, perform npm install before copying the remaining files
-COPY package*.json ./
+COPY . .
 
 # Add inputUrls.csv
 RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls.csv
 
 RUN echo "3,https://tech.gov.sg,3,3,website" >> inputUrls.csv
 
+RUN npm install
+
 # Environment variables for node and Playwright
-ENV NODE_ENV=production
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="true"
-ENV PLAYWRIGHT_BROWSERS_PATH="/opt/ms-playwright"
-ENV PATH="/opt/verapdf:${PATH}"
 
 # Install Playwright browsers
 RUN npx playwright install chromium webkit
@@ -56,9 +54,6 @@ RUN npm install
 
 # Run everything after as non-privileged user.
 USER purple
-
-# Copy application and support files
-COPY . .
 
 RUN mkdir -p /app/chromium_support_folder
 
@@ -73,12 +68,17 @@ RUN git clone https://github.com/GovTechSG/purple-a11y.git
 # Change directory into the purple-a11y folder
 WORKDIR /app/purple-a11y
 
-# Copy application and support files
-COPY . .
+# Copy package.json to working directory, perform npm install before copying the remaining files
+COPY package*.json ./
+
+# Environment variables for node and Playwright
+ENV NODE_ENV=production
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="true"
+ENV PLAYWRIGHT_BROWSERS_PATH="/opt/ms-playwright"
+ENV PATH="/opt/verapdf:${PATH}"
 
 # Install dependencies
-RUN npm install
-#RUN npm ci --omit=dev
+RUN npm ci --omit=dev
 
 # Run everything after as non-privileged user.
 USER purple
