@@ -1,0 +1,7 @@
+node_modules
+errors.txt
+summary.csv
+details.csv
+inputUrls.csv
+results/
+.DS_Store
