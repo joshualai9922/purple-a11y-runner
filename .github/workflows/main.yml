@@ -1,0 +1,62 @@
+name: Build Run and Test Docker Container
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and run Docker container
+      run: |
+        # Build your Docker image (replace 'purple-hats' and 'Dockerfile' with your image name and Dockerfile path)
+        docker build -t purple-hats .
+        # Run the Docker container (adjust any options as needed)
+        docker run -dit --name purple-hats-container purple-hats
+      # Ensure the Docker container is running before running the next step
+      continue-on-error: true
+
+    - name: Run Node CLI command inside the Docker container
+      run: |
+        # Execute a webisite crawl
+        docker exec purple-hats-container node cli -f inputUrls.csv -k ay:accessibility@tech.gov.sg
+
+    - name: Display the content
+      run: |
+        # Display Content
+        docker exec purple-hats-container ls
+      
+    - name: Copy summary.csv from Docker Container
+      run: docker cp purple-hats-container:/app/purple-a11y-runner/summary.csv ./summary.csv
+
+    - name: Copy details.csv from Docker Container
+      run: docker cp purple-hats-container:/app/purple-a11y-runner/details.csv ./details.csv
+
+    # Optional: Zip Files
+    - name: Zip CSV Files
+      run: zip results.zip summary.csv details.csv
+
+# Upload Files
+    - name: Upload CSV Files
+      uses: actions/upload-artifact@v2
+      with:
+        name: csv-results
+        path: |
+          summary.csv
+          details.csv
+    # If zipping the files, comment out the above two lines and use the line below instead
+    # path: results.zip
+
+          
+    - name: Cleanup Docker container
+      run: |
+        # Stop and remove the Docker container
+        docker stop purple-hats-container
+        docker rm purple-hats-container
