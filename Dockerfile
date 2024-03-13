@@ -75,6 +75,8 @@ RUN git clone https://github.com/GovTechSG/purple-a11y.git
 # Change directory into the purple-a11y folder
 WORKDIR /app/purple-a11y
 
+# Copy application and support files
+COPY . .
 
 # Install dependencies
 RUN npm install
@@ -83,8 +85,6 @@ RUN npm install
 # Run everything after as non-privileged user.
 USER purple
 
-# Copy application and support files
-COPY . .
 
 # Change directory into the purple-a11y folder
 WORKDIR /app/purple-a11y-runner
