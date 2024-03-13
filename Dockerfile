@@ -39,15 +39,11 @@ RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls
 
 RUN echo "3,https://tech.gov.sg,3,3,website" >> inputUrls.csv
 
-RUN npm install
-
 # Environment variables for node and Playwright
 ENV NODE_ENV=production
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="true"
 ENV PLAYWRIGHT_BROWSERS_PATH="/opt/ms-playwright"
 ENV PATH="/opt/verapdf:${PATH}"
-
-
 
 # Install Playwright browsers
 RUN npx playwright install chromium webkit
@@ -55,6 +51,8 @@ RUN npx playwright install chromium webkit
 # Add non-privileged user
 RUN addgroup -S purple && adduser -S -G purple purple
 RUN chown -R purple:purple /app
+
+RUN npm install
 
 # Run everything after as non-privileged user.
 USER purple
