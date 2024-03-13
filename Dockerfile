@@ -87,4 +87,4 @@ RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls
 
 RUN echo "3,https://tech.gov.sg,3,3,website" >> inputUrls.csv
 
-RUN node cli -f inputUrls.csv -k ay:accessibility@tech.gov.sg
+#RUN node cli -f inputUrls.csv -k ay:accessibility@tech.gov.sg
