@@ -84,10 +84,6 @@ COPY . .
 # Change directory into the purple-a11y folder
 WORKDIR /app/purple-a11y-runner
 
-# Install dependencies
-RUN npm install
-
-
 # Add inputUrls.csv
 RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls.csv
 
