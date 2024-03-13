@@ -72,7 +72,7 @@ WORKDIR /app/purple-a11y
 
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 #RUN npm ci --omit=dev
 
 # Run everything after as non-privileged user.
