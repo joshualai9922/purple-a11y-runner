@@ -40,8 +40,7 @@ ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD="true"
 ENV PLAYWRIGHT_BROWSERS_PATH="/opt/ms-playwright"
 ENV PATH="/opt/verapdf:${PATH}"
 
-# Install dependencies
-RUN npm install
+
 
 # Install Playwright browsers
 RUN npx playwright install chromium webkit
@@ -82,6 +81,10 @@ COPY . .
 
 # Change directory into the purple-a11y folder
 WORKDIR /app/purple-a11y-runner
+
+# Install dependencies
+RUN npm install
+
 
 # Add inputUrls.csv
 RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls.csv
