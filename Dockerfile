@@ -34,6 +34,11 @@ WORKDIR /app/purple-a11y-runner
 # Copy package.json to working directory, perform npm install before copying the remaining files
 COPY package*.json ./
 
+# Add inputUrls.csv
+RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls.csv
+
+RUN echo "3,https://tech.gov.sg,3,3,website" >> inputUrls.csv
+
 RUN npm install
 
 # Environment variables for node and Playwright
@@ -84,9 +89,6 @@ COPY . .
 # Change directory into the purple-a11y folder
 WORKDIR /app/purple-a11y-runner
 
-# Add inputUrls.csv
-RUN echo "Crawl Concurrency,Url,Max Pages,Max Concurrency,Scan Type" > inputUrls.csv
 
-RUN echo "3,https://tech.gov.sg,3,3,website" >> inputUrls.csv
 
 #RUN node cli -f inputUrls.csv -k ay:accessibility@tech.gov.sg
