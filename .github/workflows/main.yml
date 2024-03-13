@@ -23,9 +23,13 @@ jobs:
       # Ensure the Docker container is running before running the next step
       continue-on-error: true
 
+    - name: Check container status
+      run: docker ps -a
+
+
     - name: Run Node CLI command inside the Docker container
       run: |
-        # Execute a webisite crawl
+        # Execute a website crawl
         docker exec purple-hats-container node cli -f inputUrls.csv -k ay:accessibility@tech.gov.sg
 
     - name: Display the content
